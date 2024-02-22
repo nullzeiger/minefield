@@ -109,7 +109,7 @@ print_map (char *map, hero h)
 void
 random_numbers (int *x, int *y)
 {
-  srand (time (NULL));
+  srand ((unsigned int) time (NULL));
 
   *x = rand () % ROWSCOLS;
   *y = rand () % ROWSCOLS;
@@ -122,32 +122,24 @@ random_numbers (int *x, int *y)
 
 /* Create 5 mines */
 void
-create_mines (mine m[MINES])
+create_mines (mine m[])
 {
-  srand (time (NULL));
+  srand ((unsigned int) time (NULL));
 
-  m[0].x = rand () % ROWSCOLS;
-  m[0].y = rand () % ROWSCOLS;
-
-  m[1].x = rand () % ROWSCOLS;
-  m[1].y = rand () % ROWSCOLS;
-
-  m[2].x = rand () % ROWSCOLS;
-  m[2].y = rand () % ROWSCOLS;
-
-  m[3].x = rand () % ROWSCOLS;
-  m[3].y = rand () % ROWSCOLS;
-
-  m[4].x = rand () % ROWSCOLS;
-  m[4].y = rand () % ROWSCOLS;
+  for (int i = 0; i < MINES; i++)
+    {
+      m[i].x = rand () % ROWSCOLS;
+      m[i].y = rand () % ROWSCOLS;
+    }
 }
 
 int
 main (void)
 {
-
   /* Ceate random x and y for arrive */
-  int x, y = 0;
+  int x = 0;
+  int y = 0;
+
   random_numbers (&x, &y);
 
   /* Create arrive */
