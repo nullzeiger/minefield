@@ -23,10 +23,13 @@
 
 /* minefield with a size 10x10 */
 #define ROWSCOLS 10
+
 /* Number of mines */
 #define MINES 5
+
 /* buffer size */
 #define MAX 2
+
 /* map sprite */
 #define MAPSPRITE '*'
 
@@ -50,6 +53,7 @@ typedef struct
 /* mine data structure */
 typedef struct
 {
+  char sprite;
   int y;
   int x;
 } mine;
@@ -68,9 +72,9 @@ build_map (arrive a)
   for (int i = 0; i < ROWSCOLS; i++)
     {
       for (int j = 0; j < ROWSCOLS; j++)
-	{
-	  map[i * ROWSCOLS + j] = MAPSPRITE;
-	}
+        {
+          map[i * ROWSCOLS + j] = MAPSPRITE;
+        }
     }
 
   map[a.y * ROWSCOLS + a.x] = a.sprite;
@@ -95,9 +99,9 @@ print_map (char *map, hero h)
   for (int i = 0; i < ROWSCOLS; i++)
     {
       for (int j = 0; j < ROWSCOLS; j++)
-	{
-	  printf ("%c", map[i * ROWSCOLS + j]);
-	}
+        {
+          printf ("%c", map[i * ROWSCOLS + j]);
+        }
 
       printf ("\n");
     }
@@ -128,6 +132,7 @@ create_mines (mine m[])
 
   for (int i = 0; i < MINES; i++)
     {
+      m[i].sprite = 'X';
       m[i].x = rand () % ROWSCOLS;
       m[i].y = rand () % ROWSCOLS;
     }
@@ -170,83 +175,83 @@ main (void)
       char buffer[MAX];
 
       if (fgets (buffer, (sizeof (char) * MAX), stdin) == NULL)
-	{
-	  fprintf (stderr, "Error read command");
-	  loop = false;
-	  break;
-	}
+        {
+          fprintf (stderr, "Error read command");
+          loop = false;
+          break;
+        }
 
       if (strcmp (buffer, "w") != 0 || strcmp (buffer, "h") != 0 ||
-	  strcmp (buffer, "j") != 0 || strcmp (buffer, "k") != 0 ||
-	  strcmp (buffer, "l") != 0)
-	{
-	  print_map (map, h);
-	}
+          strcmp (buffer, "j") != 0 || strcmp (buffer, "k") != 0 ||
+          strcmp (buffer, "l") != 0)
+        {
+          print_map (map, h);
+        }
 
       if (strcmp (buffer, "q") == 0)
-	{
-	  loop = false;
-	  break;
-	}
+        {
+          loop = false;
+          break;
+        }
 
       if (strcmp (buffer, "l") == 0)
-	{
-	  h.x += 1;
-	  if (h.x > 9)
-	    {
-	      h.x = 9;
-	    }
-	  print_map (map, h);
-	}
+        {
+          h.x += 1;
+          if (h.x > 9)
+            {
+              h.x = 9;
+            }
+          print_map (map, h);
+        }
 
       if (strcmp (buffer, "h") == 0)
-	{
-	  h.x -= 1;
-	  if (h.x < 0)
-	    {
-	      h.x = 0;
-	    }
-	  print_map (map, h);
-	}
+        {
+          h.x -= 1;
+          if (h.x < 0)
+            {
+              h.x = 0;
+            }
+          print_map (map, h);
+        }
 
       if (strcmp (buffer, "k") == 0)
-	{
-	  h.y += 1;
-	  if (h.y > 9)
-	    {
-	      h.y = 9;
-	    }
-	  print_map (map, h);
-	}
+        {
+          h.y += 1;
+          if (h.y > 9)
+            {
+              h.y = 9;
+            }
+          print_map (map, h);
+        }
 
       if (strcmp (buffer, "j") == 0)
-	{
-	  h.y -= 1;
-	  if (h.y < 0)
-	    {
-	      h.y = 0;
-	    }
-	  print_map (map, h);
-	}
+        {
+          h.y -= 1;
+          if (h.y < 0)
+            {
+              h.y = 0;
+            }
+          print_map (map, h);
+        }
 
       if (h.x == a.x && h.y == a.y)
-	{
-	  puts ("Win!!");
-	  loop = false;
-	  break;
-	}
+        {
+          puts ("Win!!");
+          loop = false;
+          break;
+        }
 
       for (int i = 0; i < MINES; i++)
-	{
-	  if (h.x == m[i].x && h.y == m[i].y)
-	    {
-	      h.sprite = 'X';
-	      print_map (map, h);
-	      puts ("Game Over!!");
-	      loop = false;
-	      break;
-	    }
-	}
+        {
+          if (h.x == m[i].x && h.y == m[i].y)
+            {
+              h.sprite = m[i].sprite;
+              print_map (map, h);
+              puts ("Game Over!!");
+              loop = false;
+              break;
+            }
+        }
     }
 
   /* Free map allocation memory */
