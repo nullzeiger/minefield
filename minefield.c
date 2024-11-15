@@ -31,12 +31,12 @@
 #define MAX 2
 
 /* map sprite */
-#define MAPSPRITE '*'
+#define MAPSYMBOL '*'
 
 /* arrive data structure */
 typedef struct
 {
-  char	sprite;
+  char	symbol;
   int	y;
   int	x;
 } arrive;
@@ -44,7 +44,7 @@ typedef struct
 /* hero data structure */
 typedef struct
 {
-  char	sprite;
+  char	symbol;
   int	y;
   int	x;
 } hero;
@@ -52,7 +52,7 @@ typedef struct
 /* mine data structure */
 typedef struct
 {
-  char	sprite;
+  char	symbol;
   int	y;
   int	x;
 } mine;
@@ -73,11 +73,11 @@ build_map (arrive a)
     {
       for (int j = 0; j < ROWSCOLS; j++)
 	{
-	  map[i * ROWSCOLS + j] = MAPSPRITE;
+	  map[i * ROWSCOLS + j] = MAPSYMBOL;
 	}
     }
 
-  map[a.y * ROWSCOLS + a.x] = a.sprite;
+  map[a.y * ROWSCOLS + a.x] = a.symbol;
 
   return map;
 }
@@ -94,7 +94,7 @@ print_map (char *map, hero h)
 
   puts ("Vim command to move(hjkl) and exit(q)");
 
-  map[h.y * ROWSCOLS + h.x] = h.sprite;
+  map[h.y * ROWSCOLS + h.x] = h.symbol;
 
   for (int i = 0; i < ROWSCOLS; i++)
     {
@@ -106,7 +106,7 @@ print_map (char *map, hero h)
       printf ("\n");
     }
 
-  map[h.y * ROWSCOLS + h.x] = MAPSPRITE;
+  map[h.y * ROWSCOLS + h.x] = MAPSYMBOL;
 }
 
 /* generate x, y integer random */
@@ -132,7 +132,7 @@ create_mines (mine m[])
 
   for (int i = 0; i < MINES; i++)
     {
-      m[i].sprite = 'X';
+      m[i].symbol = 'X';
       m[i].x = rand () % ROWSCOLS;
       m[i].y = rand () % ROWSCOLS;
     }
@@ -245,7 +245,7 @@ main (void)
 	{
 	  if (h.x == m[i].x && h.y == m[i].y)
 	    {
-	      h.sprite = m[i].sprite;
+	      h.symbol = m[i].symbol;
 	      print_map (map, h);
 	      puts ("Game Over!!");
 	      loop = false;
