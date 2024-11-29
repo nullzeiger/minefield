@@ -54,6 +54,11 @@ typedef struct {
 	int x;
 } mine;
 
+/* Prototype function */
+char *build_map(arrive a);
+void print_map(char *map, hero h);
+void random_numbers(int *x, int *y);
+void create_mines(mine m[]);
 
 /* Build new map */
 char *build_map(arrive a)
