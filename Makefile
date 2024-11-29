@@ -16,16 +16,10 @@
 # along with minefield.  If not, see <http://www.gnu.org/licenses/>.
 
 CC = gcc
-CFLAGS = -O2 -Wall -Werror -ggdb -fanalyzer
+CFLAGS = -O2 -Wall -Werror -ggdb
 
 minefield: minefield.c
 	$(CC) $(CFLAGS) minefield.c -o minefield
 
 clean:
 	rm -f minefield
-
-# Emacs Flymake
-check-syntax:
-	$(CC) -o /dev/null -S ${CHK_SOURCES} || true
-
-.PHONY: check-syntax
