@@ -16,18 +16,10 @@
 # along with minefield.  If not, see <http://www.gnu.org/licenses/>.
 
 CC = gcc
-CFLAGS = -O2 -march=native -g -ggdb \
-         -Wall -Wextra -Werror \
-         -Wformat=2 -Wunused \
-         -Wconversion -Wmissing-prototypes \
-         -Wstrict-prototypes -Wcast-qual \
-         -Wnull-dereference -Wduplicated-cond \
-         -fstack-protector-strong -pie -fPIE \
-         -D_FORTIFY_SOURCE=2 -fno-omit-frame-pointer
-LDFLAGS = -Wl,-z,defs -Wl,-z,now -Wl,-z,relro
+CFLAGS = -O2 -ggdb -Wall -Wextra -Werror
 
 minefield: minefield.c
-	$(CC) $(CFLAGS) $(LDFLAGS) minefield.c -o minefield
+	$(CC) $(CFLAGS) minefield.c -o minefield
 
 clean:
 	rm -f minefield
